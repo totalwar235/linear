@@ -41,10 +41,15 @@ def A_x_Const(const,vector):
 	print_array(vector)
 
 def swap(L_one,L_Two,vector):
+	print_array(vector)
 	i = 0
 	temp = 0
 	while i < vector.m:
-		temp = vector.values[L_one*]
+		temp = vector.values[((L_one-1)*vector.m) + i]
+		vector.values[((L_one-1)*vector.m) + i] = vector.values[((L_Two-1)*vector.m) + i]
+		vector.values[((L_Two-1)*vector.m) + i] = temp
+		i += 1
+	print_array(vector)
 
 def display_arrays(matrixes):
 	i = 0
@@ -85,7 +90,8 @@ while end != 1:	#main loop
 	elif op == '3':
 		print_array(matrixes[display_arrays(matrixes)])
 	elif op == '4':
-		factor = int(input("enter number to factor by: "))
-		A_x_Const(factor,matrixes[0])
+		#factor = int(input("enter number to factor by: "))
+		#A_x_Const(factor,matrixes[0])
+		swap(1,2,matrixes[display_arrays(matrixes)])
 
 #main program ends
