@@ -47,19 +47,19 @@ def linear_math(matrixes):
 		if done == '1':
 			print("leaving math")
 		elif done == '2':
-			factor = int(input("enter factor: "))
+			factor = float(input("enter factor: "))
 			A_x_Const(factor,matrixes[display_arrays(matrixes)])
 		elif done == '3':
 			L_One = int(input("enter line one: "))
 			L_Two = int(input("enter line two: "))
 			swap(L_One,L_Two,matrixes[display_arrays(matrixes)])
 		elif done == '4':
-			factor = int(input("enter the factor for line one: "))
+			factor = float(input("enter the factor for line one: "))
 			L_One = int(input("enter line one: "))
 			L_Two = int(input("enter line two: "))
 			line_math(L_One,L_Two,factor,matrixes[display_arrays(matrixes)])
 		elif done == '5':
-			factor = int(input("enter the factor: "))
+			factor = float(input("enter the factor: "))
 			L_One = int(input("enter the line: "))
 			line_factored(L_One,factor,matrixes[display_arrays(matrixes)])
 
@@ -95,7 +95,8 @@ def line_math(L_one,L_two,factor,vector):
 	print("("+str(factor)+"*L"+str(L_one)+")+L"+str(L_two)+" -> L"+str(L_two))
 	i = 0
 	while i < vector.m: #while row has variables
-		vector.values[((L_two-1)*vector.m) + i] += vector.values[((L_one-1)*vector.m) + i] * factor
+		if(vector.values[((L_two-1)*vector.m) + i] != 0):
+			vector.values[((L_two-1)*vector.m) + i] += vector.values[((L_one-1)*vector.m) + i] * factor
 		i += 1
 	print_array(vector)
 
@@ -105,7 +106,8 @@ def line_factored(line,factor,vector):
 	print(str(factor)+"*L"+str(line)+"-> L"+str(line))
 	i = 0
 	while i < vector.m: #while row has variables
-		vector.values[((line-1)*vector.m) + i] *= factor
+		if(vector.values[((line-1)*vector.m) + i] != 0):
+			vector.values[((line-1)*vector.m) + i] *= factor
 		i += 1
 	print_array(vector)
 
@@ -118,15 +120,19 @@ def display_arrays(matrixes):
 		i += 1
 	W_name = -1
 	while W_name > (i-1) or W_name < 0:
+		#try:
+		#	W_name = int(input("matrix number: "))	#selects matrix to print
+		#except ValueError:	#tries to solve if user inputs a character
 		try:
-			W_name = int(input("matrix number: "))	#selects matrix to print
-		except ValueError:	#tries to solve if user inputs a character
 			k = 0
-			while k < len(matrixes):
-				if matrixes[k].name == str(W_name):
-			  		W_name = k	
+			W_name = input("matrix name: ")	#selects matrix to print
+			while k < len(matrixes):	#matches a number to the name
+				if matrixes[k].name == W_name:
+			  		W_name = int(k)	
 				k += 1
-			  	#end of while
+				  	#end of while
+		except ValueError: #stops the error for incorrect input
+			print("enter the matrix NAME")
 
 	return W_name	#returns the key for mmatrix
 
