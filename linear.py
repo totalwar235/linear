@@ -5,6 +5,7 @@ class matrix():
 	def __init__(self):
 		self.values = []	#arrays in classes append to each other, do this to avoid
 
+#utility: creates a matrix
 def create(head):
 	a = matrix()	#temp class
 	print("")
@@ -19,19 +20,54 @@ def create(head):
 	head.append(a)	#appends the tep class to the class matrix
 	print("")
 
+#utility: prints an array
 def print_array(vector):
 	i = 0
 	while (i+1) <= len(vector.values):
 		if (i%vector.m) == 0:
 			print("")	#puts in new lines
-		print( str(vector.values[i]),end="")	#,end="" removes newline
+		print( str(vector.values[i])+" ",end="")	#,end="" removes newline
 		i += 1
 	i = 0
 	print("")
 	print("")
 
+#utility: math loop
+def linear_math(matrixes):
+	done = 3
+	while done != '1':
+		print("1) quit")
+		print("2) constant * matrix")
+		print("3) line swap on matrix")
+		print("4) C*L1 + L2 -> L2")
+		print("5) C*L1 -> L1")
+
+		done = input("enter operation number: ")
+
+		if done == '1':
+			print("leaving math")
+		elif done == '2':
+			factor = int(input("enter factor: "))
+			A_x_Const(factor,matrixes[display_arrays(matrixes)])
+		elif done == '3':
+			L_One = int(input("enter line one: "))
+			L_Two = int(input("enter line two: "))
+			swap(L_One,L_Two,matrixes[display_arrays(matrixes)])
+		elif done == '4':
+			factor = int(input("enter the factor for line one: "))
+			L_One = int(input("enter line one: "))
+			L_Two = int(input("enter line two: "))
+			line_math(L_One,L_Two,factor,matrixes[display_arrays(matrixes)])
+		elif done == '5':
+			factor = int(input("enter the factor: "))
+			L_One = int(input("enter the line: "))
+			line_factored(L_One,factor,matrixes[display_arrays(matrixes)])
+
+
+#functionality: constant times array
 def A_x_Const(const,vector):
 	i = 0
+	#print(str(const) + "*",end="")
 	print_array(vector)
 	print("* " + str(const))
 	print("---------")
@@ -40,17 +76,40 @@ def A_x_Const(const,vector):
 		i += 1
 	print_array(vector)
 
+#functionality: swap lines
 def swap(L_one,L_Two,vector):
 	print_array(vector)
+	print("L"+str(L_one) + " <-> L" + str(L_Two))
 	i = 0
 	temp = 0
-	while i < vector.m:
+	while i < vector.m: #while a row has variables
 		temp = vector.values[((L_one-1)*vector.m) + i]
 		vector.values[((L_one-1)*vector.m) + i] = vector.values[((L_Two-1)*vector.m) + i]
 		vector.values[((L_Two-1)*vector.m) + i] = temp
 		i += 1
 	print_array(vector)
 
+#functionality: line times constant added to other line
+def line_math(L_one,L_two,factor,vector):
+	print_array(vector)
+	print("("+str(factor)+"*L"+str(L_one)+")+L"+str(L_two)+" -> L"+str(L_two))
+	i = 0
+	while i < vector.m: #while row has variables
+		vector.values[((L_two-1)*vector.m) + i] += vector.values[((L_one-1)*vector.m) + i] * factor
+		i += 1
+	print_array(vector)
+
+#functionality: line times constant
+def line_factored(line,factor,vector):
+	print_array(vector)
+	print(str(factor)+"*L"+str(line)+"-> L"+str(line))
+	i = 0
+	while i < vector.m: #while row has variables
+		vector.values[((line-1)*vector.m) + i] *= factor
+		i += 1
+	print_array(vector)
+
+#utility: displays all matrixes
 def display_arrays(matrixes):
 	i = 0
 
@@ -61,7 +120,7 @@ def display_arrays(matrixes):
 	while W_name > (i-1) or W_name < 0:
 		try:
 			W_name = int(input("matrix number: "))	#selects matrix to print
-		except ValueError:
+		except ValueError:	#tries to solve if user inputs a character
 			k = 0
 			while k < len(matrixes):
 				if matrixes[k].name == str(W_name):
@@ -90,8 +149,5 @@ while end != 1:	#main loop
 	elif op == '3':
 		print_array(matrixes[display_arrays(matrixes)])
 	elif op == '4':
-		#factor = int(input("enter number to factor by: "))
-		#A_x_Const(factor,matrixes[0])
-		swap(1,2,matrixes[display_arrays(matrixes)])
-
+		linear_math(matrixes)
 #main program ends
