@@ -7,12 +7,12 @@ class matrix():
 
 #utility: creates a matrix
 def add_one(a, z, i):
-        if z[i] == a[i]:
-                z[i] = 0
-                z = add_one(a,z,i+1)
-        else:
-                z[i] += 1
-        return z
+	if z[i] == a[i]:
+		z[i] = 0
+		z = add_one(a,z,i+1)
+	else:
+		z[i] += 1
+	return z
 
 def create(head):
 	a = matrix
@@ -25,29 +25,46 @@ def create(head):
 	j = "0"
 	for q in range(a.d):
 	        j = "[" + j + " for q in range(a.v[" + str(q) + "])]"
+	print (j)
 	a.values = eval(j)
 	print (a.values)
 	for i in range(a.d):
 	        a.v[i] -= 1
 	z[0] = -1
 	while z != a.v:
-	        z = add_one(a.v, z, 0)
-	        if a.d == 1:
-	                a.values[z[0]] = int(input(") "))
-	        elif a.d == 2:
-	                a.values[z[1]][z[0]] = int(input(") "))
-	       	elif a.d == 3:
-	       	        a.values[z[2]][z[1]][z[0]] = int(input(") "))
-	       	elif a.d == 4:
-	       	        a.values[z[3]][z[2]][z[1]][z[0]] = int(input(") "))
-	        elif a.d == 5:
-        	        a.values[z[4]][z[3]][z[2]][z[1]][z[0]] = int(input(") "))
+		z = add_one(a.v, z, 0)
+		if a.d == 1:
+			a.values[z[0]] = int(input(") "))
+		elif a.d == 2:
+			a.values[z[1]][z[0]] = int(input(") "))
+		elif a.d == 3:
+			a.values[z[2]][z[1]][z[0]] = int(input(") "))
+		elif a.d == 4:
+			a.values[z[3]][z[2]][z[1]][z[0]] = int(input(") "))
+		elif a.d == 5:
+			a.values[z[4]][z[3]][z[2]][z[1]][z[0]] = int(input(") "))
 	print (a.values)
 
 	head.append(a)	#appends the tep class to the class matrix
 
 #utility: prints an array
-#def print_array(vector):
+def print_array(vector):
+	z = []
+	for i in range(vector.d):
+		z.append(0)
+	z[0] = -1
+	while z != vector.v:
+		z = add_one(vector.v, z, 0)
+		if a.d == 1:
+			print( str(vector.values[z[0]]), end=" ")
+		elif a.d == 2:
+			print( str(vector.values[z[1]][z[0]]), end=" ")
+		elif a.d == 3:
+			print( str(vector.values[z[2]][z[1]][z[0]]), end=" ")
+		elif a.d == 4:
+			print( str(vector.values[z[3]][z[2]][z[1]][z[0]]), end=" ")
+		elif a.d == 5:
+			print( str(vector.values[z[4]][z[3]][z[2]][z[1]][z[0]]), end=" ")
 
 #utility: math loop
 def linear_math(matrixes):
@@ -163,7 +180,7 @@ while end != 1:	#main loop
 	print("3) print a matrix")
 	print("4) test")
 
-	op = raw_input("enter operation number: ")	#operations
+	op = input("enter operation number: ")	#operations
 	if op == '1':
 		end = 1
 	elif op == '2':
